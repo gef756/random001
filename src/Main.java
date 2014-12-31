@@ -10,24 +10,29 @@ public class Main {
         for (String s : zip(the_list)) {
             System.out.println(s);
         }
-
     }
 
     private static ArrayList<Iterator<String>> populateDummyList() {
+        // Populate List of Iterators with Dummy Data
+        // Expected result: a, e, h, b, f, i, c, g, j, d, k
         ArrayList<Iterator<String>> res = new ArrayList<Iterator<String>>();
-        String[] list1 = {"a", "b", "c", "d"};
-        String[] list2 = {"e", "f", "g"};
-        String[] list3 = {"h", "i", "j", "k"};
-        res.add(new StringList(list1));
-        res.add(new StringList(list2));
-        res.add(new StringList(list3));
+        res.add(new StringList(new String[] {"a", "b", "c", "d"}));
+        res.add(new StringList(new String[] {"e", "f", "g"}));
+        res.add(new StringList(new String[] {"h", "i", "j", "k"}));
         return res;
     }
 
     public static ArrayList<String> zip(List<Iterator<String>> iterators) {
+        /* Sequentially pull the i-th element from each iterator and
+        concatenate that to a final ArrayList.
+        If an iterator is shorter than the others, ignore it. */
         ArrayList<String> res = new ArrayList<String>();
+        // Make sure we exhaust all iterators
         while (hasRemainingElements(iterators)) {
+            // Check each iterator
             for (Iterator<String> it : iterators) {
+                // Only append next element to result if iterator has a
+                // next element.
                 if (it.hasNext()) {
                     res.add(it.next());
                 }
@@ -37,6 +42,8 @@ public class Main {
     }
 
     public static boolean hasRemainingElements(List<Iterator<String>> iterators) {
+        // returns true if any iterator has any remaining elements
+        // otherwise, false
         for (Iterator it : iterators) {
             if (it.hasNext()) return true;
         }
